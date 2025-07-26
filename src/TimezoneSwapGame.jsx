@@ -16,16 +16,18 @@ export default function TimezoneSwapGame() {
   const [score, setScore] = useState(0);
   const [message, setMessage] = useState("");
   const [currentCityIndex, setCurrentCityIndex] = useState(0);
-  const [roundLocked, setRoundLocked] = useState(false); // lock inputs during transitions
+  const [roundLocked, setRoundLocked] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10);
+  const [timerId, setTimerId] = useState(null);
 
   useEffect(() => {
     generateNewRound();
+    return () => {
+      if (timerId) clearInterval(timerId);
+    };
   }, []);
 
   const generateNewRound = () => {
-    // If you want to reset score each round, uncomment below:
-    // setScore(0);
-
     const shuffled = [...cities].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 4);
     const times = selected
@@ -39,12 +41,29 @@ export default function TimezoneSwapGame() {
     setTimeOptions(times);
     setMessage("");
     setCurrentCityIndex(0);
-    setRoundLocked(false); // unlock inputs
+    setRoundLocked(false);
+    setTimeLeft(10);
+
+    if (timerId) clearInterval(timerId);
+    const id = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(id);
+          setRoundLocked(true);
+          setMessage("⏰ Time's up!");
+          setTimeout(() => {
+            generateNewRound();
+          }, 1500);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    setTimerId(id);
   };
 
   const handleMatch = (timeObj) => {
-    if (roundLocked) return; // prevent clicks during lock
-
+    if (roundLocked) return;
     const city = cityOptions[currentCityIndex];
     const correctTime = getCurrentTimeInCity(city.timezone);
 
@@ -54,7 +73,8 @@ export default function TimezoneSwapGame() {
       if (currentCityIndex + 1 < cityOptions.length) {
         setCurrentCityIndex((prev) => prev + 1);
       } else {
-        setRoundLocked(true); // lock input while waiting
+        setRoundLocked(true);
+        clearInterval(timerId);
         setTimeout(() => {
           generateNewRound();
         }, 1500);
@@ -74,21 +94,10 @@ export default function TimezoneSwapGame() {
 
   return (
     <div
-      className="
-       min-h-screen 
-        flex 
-        flex-col 
-        justify-center 
-        items-center 
-        bg-gradient-to-tr from-pink-200 via-yellow-200 to-blue-300 
-        p-6 
-        font-gaming 
-        text-gray-900 
-        select-none
-      "
+      className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-pink-200 via-yellow-200 to-blue-300 p-6 font-gaming text-gray-900 select-none"
     >
       <div className="max-w-lg w-full flex flex-col items-center space-y-8">
-        {/* Header bar */}
+        {/* Header */}
         <header className="w-full flex justify-between items-center p-4 bg-gradient-to-r from-purple-300 via-pink-300 to-yellow-300 rounded-xl shadow-md border-2 border-purple-400">
           <h1 className="text-3xl font-extrabold tracking-widest text-purple-700">
             TIMEXXONED
@@ -96,7 +105,7 @@ export default function TimezoneSwapGame() {
           <div className="text-2xl font-bold text-purple-600">⭐ {score}</div>
         </header>
 
-        {/* City to guess */}
+        {/* City Section */}
         <section className="w-full bg-white rounded-3xl shadow-lg p-8 flex flex-col items-center border-2 border-purple-300">
           <p className="mb-3 text-xl tracking-wide text-purple-600 font-semibold uppercase">
             What time is it in
@@ -105,9 +114,15 @@ export default function TimezoneSwapGame() {
             <span>{cityOptions[currentCityIndex]?.flag || "❓"}</span>
             <span>{cityOptions[currentCityIndex]?.name || ""}</span>
           </div>
+          <p className="mt-4 text-center text-purple-500 font-mono text-base">
+            💡 {cityOptions[currentCityIndex]?.fact}
+          </p>
+          <div className="mt-4 text-lg text-red-600 font-bold">
+            ⏳ Time Left: {timeLeft}s
+          </div>
         </section>
 
-        {/* Time options */}
+        {/* Time Options */}
         <section className="w-full grid grid-cols-2 gap-6">
           {timeOptions.map((t, i) => (
             <div
@@ -131,7 +146,7 @@ export default function TimezoneSwapGame() {
           ))}
         </section>
 
-        {/* Feedback message */}
+        {/* Feedback */}
         {message && (
           <p
             className={`mt-4 text-5xl font-extrabold ${
@@ -142,6 +157,7 @@ export default function TimezoneSwapGame() {
           </p>
         )}
 
+        {/* Footer */}
         <footer className="text-sm text-purple-700 font-mono tracking-wide text-center">
           Made with 🎈 for a pop @ Marinkie Thupi
         </footer>
