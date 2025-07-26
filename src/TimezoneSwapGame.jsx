@@ -91,7 +91,7 @@ export default function TimezoneSwapGame() {
         {/* Header bar */}
         <header className="w-full flex justify-between items-center p-4 bg-gradient-to-r from-purple-300 via-pink-300 to-yellow-300 rounded-xl shadow-md border-2 border-purple-400">
           <h1 className="text-3xl font-extrabold tracking-widest text-purple-700">
-            TIMEZONE SWAP
+            TIMEXXONED
           </h1>
           <div className="text-2xl font-bold text-purple-600">⭐ {score}</div>
         </header>
