@@ -1,0 +1,31 @@
+
+const cities = [
+  { name: "New York", timezone: "America/New_York", flag: "🇺🇸" },
+  { name: "London", timezone: "Europe/London", flag: "🇬🇧" },
+  { name: "Tokyo", timezone: "Asia/Tokyo", flag: "🇯🇵" },
+  { name: "Cape Town", timezone: "Africa/Johannesburg", flag: "🇿🇦" },
+  { name: "Sydney", timezone: "Australia/Sydney", flag: "🇦🇺" },
+  { name: "Los Angeles", timezone: "America/Los_Angeles", flag: "🇺🇸" },
+  { name: "Paris", timezone: "Europe/Paris", flag: "🇫🇷" },
+  { name: "Berlin", timezone: "Europe/Berlin", flag: "🇩🇪" },
+  { name: "Moscow", timezone: "Europe/Moscow", flag: "🇷🇺" },
+  { name: "Dubai", timezone: "Asia/Dubai", flag: "🇦🇪" },
+  { name: "Mumbai", timezone: "Asia/Kolkata", flag: "🇮🇳" },
+  { name: "Beijing", timezone: "Asia/Shanghai", flag: "🇨🇳" },
+  { name: "São Paulo", timezone: "America/Sao_Paulo", flag: "🇧🇷" },
+  { name: "Mexico City", timezone: "America/Mexico_City", flag: "🇲🇽" },
+  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires", flag: "🇦🇷" },
+  { name: "Cairo", timezone: "Africa/Cairo", flag: "🇪🇬" },
+  { name: "Nairobi", timezone: "Africa/Nairobi", flag: "🇰🇪" },
+  { name: "Honolulu", timezone: "Pacific/Honolulu", flag: "🇺🇸" },
+  { name: "Singapore", timezone: "Asia/Singapore", flag: "🇸🇬" },
+  { name: "Seoul", timezone: "Asia/Seoul", flag: "🇰🇷" },
+  { name: "Istanbul", timezone: "Europe/Istanbul", flag: "🇹🇷" },
+  { name: "Jakarta", timezone: "Asia/Jakarta", flag: "🇮🇩" },
+  { name: "Bangkok", timezone: "Asia/Bangkok", flag: "🇹🇭" },
+  { name: "Buenos Aires", timezone: "America/Argentina/Buenos_Aires", flag: "🇦🇷" },
+  { name: "Lagos", timezone: "Africa/Lagos", flag: "🇳🇬" },
+  { name: "Toronto", timezone: "America/Toronto", flag: "🇨🇦" },
+];
+
+export default cities;
